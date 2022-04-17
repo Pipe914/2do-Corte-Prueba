@@ -29,6 +29,20 @@ public class Player : MonoBehaviour
 
         jump();
         falling();
+        fire(); 
+
+    }
+    void fire()
+    {
+        if(Input.GetKey(KeyCode.K))
+        {
+            myAnimator.SetLayerWeight(1, 1); 
+ 
+        }
+        else
+        {
+            myAnimator.SetLayerWeight(1, 0); 
+        }
     }
 
     void jump()
