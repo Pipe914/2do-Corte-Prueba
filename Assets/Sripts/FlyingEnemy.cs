@@ -6,6 +6,7 @@ using Pathfinding;
 public class FlyingEnemy : MonoBehaviour
 {
     [SerializeField] GameObject player;
+    [SerializeReference] int healt;
     AIPath myPath;
     
     // Start is called before the first frame update
@@ -39,9 +40,26 @@ public class FlyingEnemy : MonoBehaviour
         else
             myPath.isStopped = true;
     }
+
+    public void hit(int damage)
+    {
+        healt -= damage;
+        if (healt <= 0)
+            Destroy(gameObject);
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 5f);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 7)
+        {
+            Debug.Log("Choque con player");
+            Player p = collision.gameObject.GetComponent<Player>();
+            p.hit();
+        }
     }
 }

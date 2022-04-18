@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class EnemyStatic : MonoBehaviour
 {
-    public GameObject Player;
-    public GameObject BulletEnemStaPrefab;
+    [SerializeField] GameObject Bullet;
+    [SerializeField] int healt;
+    [SerializeField] float alcance;
+    [SerializeField] float fireRate;
+    private float nextFire, shootingDelay;
 
     // Start is called before the first frame update
     void Start()
@@ -16,27 +19,22 @@ public class EnemyStatic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 direction = Player.transform.position - transform.position;
-        if (direction.x >= 0.0f) transform.localScale = new Vector2(-1f, 1f);
-        else transform.localScale = new Vector2(1f, 1f);
+        RaycastHit2D shooting =  Physics2D.Raycast(transform.position, transform.right, alcance,LayerMask.GetMask("Player"));
+        Debug.DrawRay(transform.position, transform.right * alcance, Color.blue);
 
-        float distance = Mathf.Abs(Player.transform.position.x - transform.position.x);
-
-        if (distance < 2.0f)
+        if (shooting.collider != null)
         {
-            Disparar();
+            shoot();
+        }
+    }
 
+    void shoot()
+    {
+        if (Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            Instantiate(Bullet, transform.position, transform.rotation);
         }
 
-        void Disparar()
-        {
-            Vector2 Direction;
-            if (transform.localScale.x == 1f) direction = Vector2.right;
-            else direction = Vector2.left;
-
-
-            //GameObject bullet = Instantiate(BulletEnemStaPrefab, transform.position + direction * .1f, Quaternion.identify);
-            //bullet.GetComponent<BulletScript>().SetDirection(Direction); 
-        }
     }
 }

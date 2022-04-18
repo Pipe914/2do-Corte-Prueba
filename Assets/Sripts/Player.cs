@@ -108,4 +108,10 @@ public class Player : MonoBehaviour
         }
 
     }
+
+    public void hit()
+    {
+        // Colocar gameover
+        Destroy(gameObject);
+    }
 }

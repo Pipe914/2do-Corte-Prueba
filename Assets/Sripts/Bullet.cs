@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     private Animator myAnimator;
     private float destroyTime;
     private bool destroy = false;
-    private float direccion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +29,6 @@ public class Bullet : MonoBehaviour
         }
     }
 
-
-
     private void FixedUpdate()
     {
         
@@ -46,5 +44,16 @@ public class Bullet : MonoBehaviour
         }
 
     }
+    /*
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("FlyingEnemy"))
+        {
+            FlyingEnemy enemy = GetComponent<FlyingEnemy>();
+            enemy.hit(damage);
+        }
+
+
+    }*/
 
 }
