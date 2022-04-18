@@ -6,8 +6,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
+    [SerializeField] float fireRate;
+    [SerializeField] GameObject bullet;
     Rigidbody2D myBody;
     Animator myAnimator;
+    float nextFire, shootingDelay;
+    int direcShooting;
     bool isGrounded = true;
     bool iJump = false;
 
@@ -16,6 +20,7 @@ public class Player : MonoBehaviour
     {
         myBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
+        nextFire = Time.time;
     }
 
     // Update is called once per frame
@@ -34,15 +39,22 @@ public class Player : MonoBehaviour
     }
     void fire()
     {
-        if(Input.GetKey(KeyCode.K))
+        if (Input.GetKeyUp(KeyCode.K))
         {
-            myAnimator.SetLayerWeight(1, 1); 
- 
+            if (Time.time > nextFire)
+            {
+                myAnimator.SetLayerWeight(1, 1);
+                shootingDelay = Time.time + 0.5f;
+                nextFire = Time.time + fireRate;
+                if(direcShooting == 1)
+                    Instantiate(bullet, myBody.transform.position, Quaternion.Euler(0,0,0));
+                if(direcShooting == -1)
+                    Instantiate(bullet, myBody.transform.position, Quaternion.Euler(0,180,0));
+            }
+                
         }
-        else
-        {
-            myAnimator.SetLayerWeight(1, 0); 
-        }
+        if (Time.time > shootingDelay)
+            myAnimator.SetLayerWeight(1, 0);
     }
 
     void jump()
@@ -79,12 +91,14 @@ public class Player : MonoBehaviour
         if (dirH > 0)
         {
             transform.localScale = new Vector2(1, 1);
+            direcShooting = 1;
             myAnimator.SetBool("isRunning", true);
             myBody.velocity = new Vector2(dirH * speed, myBody.velocity.y);
         }
         if (dirH < 0)
         {
             transform.localScale = new Vector2(-1, 1);
+            direcShooting = -1;
             myAnimator.SetBool("isRunning", true);
             myBody.velocity = new Vector2(dirH * speed, myBody.velocity.y);
         }
