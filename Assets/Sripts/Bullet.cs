@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float velocidad;
     [SerializeField] GameObject player;
+    [SerializeField] int damage;
     private Rigidbody2D myBulet;
     private Animator myAnimator;
     private float destroyTime;
@@ -35,14 +36,29 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject)
+        if (collision.gameObject.layer == 9)
         {
-            destroyTime = Time.time + 0.2f;
-            myAnimator.SetBool("inCollision", true);
-            velocidad = 0;
-            destroy = true;
+            if (collision.gameObject.CompareTag("FlyingEnemy"))
+            {
+                FlyingEnemy e = collision.gameObject.GetComponent<FlyingEnemy>();
+                e.hit(damage);
+            }
+            if (collision.gameObject.CompareTag("StaticEnemy"))
+            {
+                EnemyStatic e = collision.gameObject.GetComponent<EnemyStatic>();
+                e.hit(damage);
+            }
         }
+        destroyBullet();
 
+    }
+
+    private void destroyBullet()
+    {
+        destroyTime = Time.time + 0.2f;
+        myAnimator.SetBool("inCollision", true);
+        velocidad = 0;
+        destroy = true;
     }
     /*
     private void OnTriggerEnter2D(Collider2D collision)

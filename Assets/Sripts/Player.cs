@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -8,33 +9,35 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float fireRate;
     [SerializeField] GameObject bullet;
+    [SerializeField] AudioClip deathClip;
     Rigidbody2D myBody;
     Animator myAnimator;
-    float nextFire, shootingDelay;
+    float nextFire, shootingDelay, soundDeathTime, restartTime;
     int direcShooting;
     bool isGrounded = true;
     bool iJump = false;
+    BoxCollider2D myBox;
 
     // Start is called before the first frame update
     void Start()
     {
         myBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
+        myBox = GetComponent<BoxCollider2D>();
         nextFire = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
-        RaycastHit2D ray = Physics2D.Raycast(transform.position, Vector2.down, 1.3f, LayerMask.GetMask("Ground"));
+        RaycastHit2D ray = Physics2D.BoxCast(myBox.bounds.center, myBox.bounds.size , 0f, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
         Debug.DrawRay(transform.position, Vector2.down * 1.3f, Color.red);
-        //Debug.Log("Colisionando con: " + ray.collider.gameObject.name);
 
         isGrounded = ray.collider !=  null;
 
         jump();
         falling();
-        fire(); 
+        fire();
 
     }
     void fire()
@@ -55,6 +58,7 @@ public class Player : MonoBehaviour
         }
         if (Time.time > shootingDelay)
             myAnimator.SetLayerWeight(1, 0);
+
     }
 
     void jump()
@@ -108,10 +112,19 @@ public class Player : MonoBehaviour
         }
 
     }
-
     public void hit()
     {
-        // Colocar gameover
-        Destroy(gameObject);
+        StartCoroutine(isDeath());   
     }
+    IEnumerator isDeath()
+    {
+        myAnimator.SetBool("isDeath", true);
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(1f);
+        AudioSource.PlayClipAtPoint(deathClip, myBody.position);
+        yield return new WaitForSecondsRealtime(1f);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Megaman");
+    }
+
 }

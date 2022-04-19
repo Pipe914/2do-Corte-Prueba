@@ -7,18 +7,21 @@ public class FlyingEnemy : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeReference] int healt;
+    private Animator myAnimator;
     AIPath myPath;
     
     // Start is called before the first frame update
     void Start()
     {
         myPath = GetComponent<AIPath>();
+        myAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         chasingPlayer();
+        death();
     }
     void chasingPlayer()
     {
@@ -45,7 +48,19 @@ public class FlyingEnemy : MonoBehaviour
     {
         healt -= damage;
         if (healt <= 0)
-            Destroy(gameObject);
+        {
+            myAnimator.SetBool("isDeath", true);
+            myPath.isStopped = true;
+        }
+    }
+
+    private void death()
+    {
+        if (healt <= 0)
+        {
+            if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                Destroy(gameObject);
+        }
     }
     private void OnDrawGizmos()
     {

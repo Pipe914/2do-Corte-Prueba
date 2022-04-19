@@ -140,6 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocidad: 10
   player: {fileID: 7519502938977412906, guid: 327e8ca7428b7f54db53599afb5842e9, type: 3}
+  damage: 1
 --- !u!95 &-2713401486309480653
 Animator:
   serializedVersion: 4
