@@ -31,7 +31,7 @@ public class BulletStaticEnemy : MonoBehaviour
         if (collision.gameObject.layer == 7)
         {
             Player p = collision.gameObject.GetComponent<Player>();
-            p.hit();
+            p.hit();    
         }
         else
             Destroy(gameObject);

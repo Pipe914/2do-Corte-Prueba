@@ -11,12 +11,15 @@ public class Bullet : MonoBehaviour
     private Animator myAnimator;
     private float destroyTime;
     private bool destroy = false;
+   
+
 
     // Start is called before the first frame update
     void Start()
     {
         myBulet = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -26,7 +29,7 @@ public class Bullet : MonoBehaviour
         if (destroy)
         {
             if (destroyTime < Time.time)
-                Destroy(gameObject);
+                Destroy(gameObject);  
         }
     }
 

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] float fireRate;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioClip deathClip;
+    public Transform firePoint; 
     Rigidbody2D myBody;
     Animator myAnimator;
     float nextFire, shootingDelay, soundDeathTime, restartTime;
@@ -50,9 +51,9 @@ public class Player : MonoBehaviour
                 shootingDelay = Time.time + 0.5f;
                 nextFire = Time.time + fireRate;
                 if(direcShooting == 1)
-                    Instantiate(bullet, myBody.transform.position, Quaternion.Euler(0,0,0));
+                    Instantiate(bullet, firePoint.position, Quaternion.Euler(0, 0, 0));
                 if(direcShooting == -1)
-                    Instantiate(bullet, myBody.transform.position, Quaternion.Euler(0,180,0));
+                    Instantiate(bullet,firePoint.position , Quaternion.Euler(0, 180, 0));
             }
                 
         }
@@ -92,6 +93,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         float dirH = Input.GetAxis("Horizontal");
+       
         if (dirH > 0)
         {
             transform.localScale = new Vector2(1, 1);
@@ -112,6 +114,7 @@ public class Player : MonoBehaviour
         }
 
     }
+
     public void hit()
     {
         StartCoroutine(isDeath());   

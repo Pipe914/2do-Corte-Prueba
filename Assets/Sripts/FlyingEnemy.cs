@@ -9,7 +9,7 @@ public class FlyingEnemy : MonoBehaviour
     [SerializeReference] int healt;
     private Animator myAnimator;
     AIPath myPath;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +30,6 @@ public class FlyingEnemy : MonoBehaviour
         Debug.Log("La distancia es: " + distancia);
         if(distancia < 8)
         {
-
         }
         Debug.DrawLine(transform.position, player.transform.position, Color.red);
         */

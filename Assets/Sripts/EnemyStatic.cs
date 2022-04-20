@@ -11,6 +11,8 @@ public class EnemyStatic : MonoBehaviour
     private Animator myAnimator;
     private BoxCollider2D myCollider;
     private float nextFire;
+    public Transform firePoint; 
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,15 +44,7 @@ public class EnemyStatic : MonoBehaviour
 
     private void death()
     {
-       if(healt <= 0)
-       {
-            if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            {
-                myAnimator.SetBool("destroyed", true);
-                myCollider.enabled = false;
-                transform.position = new Vector2(transform.position.x, transform.position.y - .5f);
-            }
-       }
+        StartCoroutine( isDeath()); 
     }
 
     void shoot()
@@ -58,8 +52,24 @@ public class EnemyStatic : MonoBehaviour
         if (Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            Instantiate(Bullet, transform.position, transform.rotation);
+            Instantiate(Bullet, firePoint.position , firePoint.rotation);
         }
 
+    }
+
+    IEnumerator isDeath()
+    {
+
+         if(healt <= 0)
+       {
+            if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                myAnimator.SetBool("destroyed", true);
+                myCollider.enabled = false;
+                transform.position = new Vector2(transform.position.x, transform.position.y - .5f);
+                yield return null; 
+                
+            }               
+       }
     }
 }
