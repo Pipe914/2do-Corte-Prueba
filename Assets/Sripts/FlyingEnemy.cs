@@ -54,18 +54,17 @@ public class FlyingEnemy : MonoBehaviour
     }
 
     private void death()
+
     {
-        if (healt <= 0)
-        {
-            if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-                Destroy(gameObject);
-        }
+        StartCoroutine(isDeath());
+       
+
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 5f);
-    }
+    }   
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -76,4 +75,14 @@ public class FlyingEnemy : MonoBehaviour
             p.hit();
         }
     }
-}
+    IEnumerator isDeath()
+    {
+      if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                Destroy(gameObject);
+        
+        yield return null;
+    }
+
+
+
+    }
