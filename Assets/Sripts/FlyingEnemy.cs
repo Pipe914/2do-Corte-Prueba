@@ -75,8 +75,7 @@ public class FlyingEnemy : MonoBehaviour
         myPath.isStopped = true;
         myCollider.enabled = false;
         yield return new WaitForSeconds(1f);
-     //   if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            Destroy(gameObject);
+        Destroy(gameObject);
         yield return null;
 
     }
