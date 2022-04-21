@@ -49,7 +49,6 @@ public class FlyingEnemy : MonoBehaviour
         healt -= damage;
         if (healt <= 0)
         {
-         
             StartCoroutine(isDeath());
         }
     }
@@ -71,8 +70,8 @@ public class FlyingEnemy : MonoBehaviour
     }
     IEnumerator isDeath()
     {
-        myAnimator.SetBool("isDeath", true);
         myPath.isStopped = true;
+        myAnimator.SetBool("isDeath", true);
         myCollider.enabled = false;
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
