@@ -8,6 +8,7 @@ public class FlyingEnemy : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeReference] int healt;
     private Animator myAnimator;
+    private BoxCollider2D myCollider; 
     AIPath myPath;
 
     // Start is called before the first frame update
@@ -15,13 +16,13 @@ public class FlyingEnemy : MonoBehaviour
     {
         myPath = GetComponent<AIPath>();
         myAnimator = GetComponent<Animator>();
+        myCollider = GetComponent<BoxCollider2D>(); 
     }
 
     // Update is called once per frame
     void Update()
     {
         chasingPlayer();
-        death();
     }
     void chasingPlayer()
     {
@@ -48,18 +49,11 @@ public class FlyingEnemy : MonoBehaviour
         healt -= damage;
         if (healt <= 0)
         {
-            myAnimator.SetBool("isDeath", true);
-            myPath.isStopped = true;
+         
+            StartCoroutine(isDeath());
         }
     }
 
-    private void death()
-
-    {
-        StartCoroutine(isDeath());
-       
-
-    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -77,10 +71,14 @@ public class FlyingEnemy : MonoBehaviour
     }
     IEnumerator isDeath()
     {
-      if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-                Destroy(gameObject);
-        
+        myAnimator.SetBool("isDeath", true);
+        myPath.isStopped = true;
+        myCollider.enabled = false;
+        yield return new WaitForSeconds(1f);
+     //   if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            Destroy(gameObject);
         yield return null;
+
     }
 
 
