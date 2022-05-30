@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] float fireRate;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioClip deathClip;
-    public Transform firePoint; 
+    public Transform firePoint;  
     Rigidbody2D myBody;
     Animator myAnimator;
     float nextFire, shootingDelay, soundDeathTime, restartTime;
@@ -18,6 +18,13 @@ public class Player : MonoBehaviour
     bool isGrounded = true;
     bool iJump = false;
     BoxCollider2D myBox;
+    bool isTouching = false;
+    bool wallSliding;
+    public float wallSlidingSpeed = 0.75f;
+
+    bool isTouchingR;
+    bool isTouchingL; 
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +46,22 @@ public class Player : MonoBehaviour
         jump();
         falling();
         fire();
+
+      /*  if(isTouching== true && isGrounded==false   ){
+            wallSliding = true;    
+        }
+        else
+        {
+            wallSliding = false; 
+        }
+
+        if (wallSliding)
+        {
+            myAnimator.Play("Wall");
+            myBody.velocity = new Vector2(myBody.velocity.x, Mathf.Clamp(myBody.velocity.y, -wallSlidingSpeed,float.MaxValue)); 
+            
+        }*/
+          
 
     }
     void fire()
@@ -67,7 +90,7 @@ public class Player : MonoBehaviour
         if (isGrounded)
         {
             
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && wallSliding==false)
             {
                 myBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 iJump = true;
@@ -85,7 +108,7 @@ public class Player : MonoBehaviour
     
     void falling()
     {
-        if (myBody.velocity.y != 0 && !isGrounded && !iJump)
+        if (myBody.velocity.y != 0 && !isGrounded && !iJump && !isTouchingR && !isTouchingL) 
             myAnimator.SetBool("isFalling", true);
         else
             myAnimator.SetBool("isFalling", false);
@@ -95,14 +118,16 @@ public class Player : MonoBehaviour
     {
         float dirH = Input.GetAxis("Horizontal");
        
-        if (dirH > 0)
-        {
+        if (dirH > 0 && isTouchingR==false)
+        {   
             transform.localScale = new Vector2(1, 1);
             direcShooting = 1;
             myAnimator.SetBool("isRunning", true);
             myBody.velocity = new Vector2(dirH * speed, myBody.velocity.y);
+
         }
-        if (dirH < 0)
+        if (dirH < 0 && isTouchingL==false
+            )
         {
             transform.localScale = new Vector2(-1, 1);
             direcShooting = -1;
@@ -130,5 +155,24 @@ public class Player : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Megaman");
     }
+    public void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("ParedDerecha")){
+            isTouching = true;
+            isTouchingR = true; 
 
+        }
+        if(collision.gameObject.CompareTag("ParedIzquierda")){
+            isTouching = true;
+            isTouchingL = true; 
+            
+        }
+    }
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        isTouching = false; 
+        isTouchingR=false;
+        isTouchingR=false;
+
+    }
 }

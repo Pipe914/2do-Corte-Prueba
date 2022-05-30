@@ -6,6 +6,8 @@ TagManager:
   tags:
   - FlyingEnemy
   - StaticEnemy
+  - ParedIzquierda
+  - ParedDerecha
   layers:
   - Default
   - TransparentFX
