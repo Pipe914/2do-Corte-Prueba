@@ -29,28 +29,33 @@ public class EnemyStatic : MonoBehaviour
         {
             shoot();
         }
-        death();
+        StartCoroutine(isDeath());
     }
     public void hit(int damage)
     {
         healt -= damage;
         if (healt <= 0)
         {
+            
             myAnimator.SetBool("isDeath", true);
         }
     }
 
-    private void death()
+    IEnumerator isDeath()
     {
-       if(healt <= 0)
-       {
+
+        if (healt <= 0)
+        {
             if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 myAnimator.SetBool("destroyed", true);
                 myCollider.enabled = false;
                 transform.position = new Vector2(transform.position.x, transform.position.y - .5f);
+                StartCoroutine(FindObjectOfType<GameManager>().countStaticEnemys());
+                yield return null;
+
             }
-       }
+        }
     }
 
     void shoot()

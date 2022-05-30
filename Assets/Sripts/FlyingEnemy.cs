@@ -59,7 +59,10 @@ public class FlyingEnemy : MonoBehaviour
         if (healt <= 0)
         {
             if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                StartCoroutine(FindObjectOfType<GameManager>().countFlyingEnemys());
                 Destroy(gameObject);
+            }
         }
     }
     private void OnDrawGizmos()

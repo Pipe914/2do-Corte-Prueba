@@ -16,7 +16,7 @@ MonoBehaviour:
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
-  - m_Id: 0
+  - m_Id: 1
     m_Sprites:
     - {fileID: 1004989044, guid: 2aff759261d00b44590bd308c3604483, type: 3}
     m_GameObject: {fileID: 0}
@@ -37,7 +37,7 @@ MonoBehaviour:
     - {x: -1, y: 1, z: 0}
     - {x: 1, y: -1, z: 0}
     m_RuleTransform: 1
-  - m_Id: 1
+  - m_Id: 2
     m_Sprites:
     - {fileID: 1320127924, guid: 2aff759261d00b44590bd308c3604483, type: 3}
     m_GameObject: {fileID: 0}
@@ -53,7 +53,7 @@ MonoBehaviour:
     - {x: -1, y: 1, z: 0}
     - {x: 0, y: 1, z: 0}
     m_RuleTransform: 1
-  - m_Id: 2
+  - m_Id: 3
     m_Sprites:
     - {fileID: -1843401247, guid: 2aff759261d00b44590bd308c3604483, type: 3}
     - {fileID: -1927859528, guid: 2aff759261d00b44590bd308c3604483, type: 3}

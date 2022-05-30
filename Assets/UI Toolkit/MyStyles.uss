@@ -1,0 +1,13 @@
+.CountEnemy {
+    height: 43px;
+    width: 54px;
+    font-size: 27px;
+    margin-top: 5px;
+    background-color: rgba(0, 0, 0, 0.42);
+    color: rgb(255, 255, 255);
+    -unity-text-outline-color: rgba(255, 255, 255, 0);
+    border-top-left-radius: 19px;
+    border-bottom-left-radius: 19px;
+    border-top-right-radius: 19px;
+    border-bottom-right-radius: 19px;
+}
