@@ -12,9 +12,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        flyingEnemys = GameObject.FindGameObjectsWithTag("FlyingEnemy").Length;
-        staticEnemys = GameObject.FindGameObjectsWithTag("StaticEnemy").Length;
-        StartCoroutine(startingCounters());
+       StartCoroutine(StartGame());
     }
 
     // Update is called once per frame
@@ -25,9 +23,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator startingCounters()
     {
+        flyingEnemys = GameObject.FindGameObjectsWithTag("FlyingEnemy").Length;
+        staticEnemys = GameObject.FindGameObjectsWithTag("StaticEnemy").Length;
         yield return new WaitForSeconds(.5f);
         FindObjectOfType<UIControllerContadorEnemigos>().ChangeContadorFlying(flyingEnemys);
         FindObjectOfType<UIControllerContadorEnemigos>().ChangeContadorStatic(staticEnemys);
+        ContadorEnemigos.GetComponent<UIDocument>().rootVisualElement.Q("Cont-Enemys").style.display = DisplayStyle.Flex;
         yield return null;
     }
 
@@ -47,6 +48,13 @@ public class GameManager : MonoBehaviour
 
         FindObjectOfType<UIControllerContadorEnemigos>().ChangeContadorStatic(staticEnemys);
 
+        yield return null;
+    }
+
+    IEnumerator StartGame()
+    {
+        StartCoroutine(startingCounters());
+        Time.timeScale = 0;
         yield return null;
     }
 }

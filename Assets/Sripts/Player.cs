@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit2D ray = Physics2D.BoxCast(myBox.bounds.center, myBox.bounds.size , 0f, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
+        RaycastHit2D ray = Physics2D.BoxCast(myBox.bounds.center, myBox.bounds.size , 0f, Vector2.down, 0.1f, LayerMask.GetMask("Ground", "Enemy"));
         Debug.DrawRay(transform.position, Vector2.down * 1.3f, Color.red);
 
         isGrounded = ray.collider !=  null;
