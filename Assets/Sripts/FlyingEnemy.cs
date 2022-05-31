@@ -7,8 +7,11 @@ public class FlyingEnemy : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeReference] int healt;
+    [SerializeField] AudioClip deathClipEnemy;
+
     private Animator myAnimator;
     private BoxCollider2D MyCollider;
+
     AIPath myPath;
     
     // Start is called before the first frame update
@@ -65,6 +68,8 @@ public class FlyingEnemy : MonoBehaviour
             if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 StartCoroutine(FindObjectOfType<GameManager>().countFlyingEnemys());
+                AudioSource.PlayClipAtPoint(deathClipEnemy, player.transform.position);
+
                 Destroy(gameObject);
             }
         }

@@ -5,9 +5,11 @@ using UnityEngine;
 public class EnemyStatic : MonoBehaviour
 {
     [SerializeField] GameObject Bullet;
+    [SerializeField] GameObject player;
     [SerializeField] int healt;
     [SerializeField] float alcance;
     [SerializeField] float fireRate;
+    [SerializeField] AudioClip deathClipEnemy;
     private Animator myAnimator;
     private BoxCollider2D myCollider;
     private float nextFire;
@@ -52,6 +54,8 @@ public class EnemyStatic : MonoBehaviour
                 myCollider.enabled = false;
                 transform.position = new Vector2(transform.position.x, transform.position.y - .5f);
                 StartCoroutine(FindObjectOfType<GameManager>().countStaticEnemys());
+                AudioSource.PlayClipAtPoint(deathClipEnemy, player.transform.position);
+
                 yield return null;
 
             }
@@ -63,7 +67,7 @@ public class EnemyStatic : MonoBehaviour
         if (Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            Instantiate(Bullet, transform.position, transform.rotation);
+            Instantiate(Bullet, transform.position,transform.rotation);
         }
 
     }

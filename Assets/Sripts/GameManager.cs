@@ -9,12 +9,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIDocument ContadorEnemigos;
     [SerializeField] UIDocument WinScreen;
     private int flyingEnemys, staticEnemys;
-
+    [SerializeField] AudioClip Inicio; 
+    [SerializeField] AudioClip Escena;
+    private AudioSource musiquita; 
 
     // Start is called before the first frame update
     void Start()
     {
-       StartCoroutine(StartGame());
+        musiquita = GetComponent<AudioSource>();
+        StartCoroutine(StartGame());
+
     }
 
     // Update is called once per frame
@@ -34,7 +38,11 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<UIControllerContadorEnemigos>().ChangeContadorFlying(flyingEnemys);
         FindObjectOfType<UIControllerContadorEnemigos>().ChangeContadorStatic(staticEnemys);
         ContadorEnemigos.GetComponent<UIDocument>().rootVisualElement.Q("Cont-Enemys").style.display = DisplayStyle.Flex;
+        musiquita.Stop();
+        musiquita.clip = Escena; 
+        musiquita.Play();
         yield return null;
+
     }
 
     public IEnumerator countFlyingEnemys()
@@ -58,10 +66,14 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartGame()
     {
+        musiquita.clip = Inicio; 
+        musiquita.loop = true;
+        musiquita.Play(); 
         StartCoroutine(startingCounters());
         Time.timeScale = 0;
         yield return null;
     }
+
 
     IEnumerator WinGame()
     {

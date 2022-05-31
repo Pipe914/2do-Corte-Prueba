@@ -123,8 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b8da4f670f3954c97199501104f53a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1874302508426697222, guid: 327e8ca7428b7f54db53599afb5842e9, type: 3}
   healt: 2
+  deathClipEnemy: {fileID: 8300000, guid: 4b7f5d2b0f1b4c641bddf96b4aa09b27, type: 3}
 --- !u!114 &7476611066198298315
 MonoBehaviour:
   m_ObjectHideFlags: 0

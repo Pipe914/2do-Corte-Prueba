@@ -148,9 +148,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 6868321783240835744, guid: 3281fc35bd4787342a86477b0779bf6b, type: 3}
+  player: {fileID: 1874302508426697222, guid: 327e8ca7428b7f54db53599afb5842e9, type: 3}
   healt: 5
   alcance: 10
   fireRate: 5
+  deathClipEnemy: {fileID: 8300000, guid: 4b7f5d2b0f1b4c641bddf96b4aa09b27, type: 3}
 --- !u!95 &3960715416113547616
 Animator:
   serializedVersion: 4

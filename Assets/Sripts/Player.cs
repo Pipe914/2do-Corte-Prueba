@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] float fireRate;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioClip deathClip;
+    [SerializeField] AudioClip jumpClip;
+
     Rigidbody2D myBody;
     Animator myAnimator;
     float nextFire, shootingDelay, soundDeathTime, restartTime;
@@ -69,6 +71,8 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 myBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                AudioSource.PlayClipAtPoint(jumpClip, myBody.position);
+
                 iJump = true;
             }
             
@@ -108,7 +112,7 @@ public class Player : MonoBehaviour
         }
         if (dirH == 0)
         {
-            myBody.velocity = Vector2.zero;
+            myBody.velocity = new Vector2(0, myBody.velocity.y);
             myAnimator.SetBool("isRunning", false);
         }
 
