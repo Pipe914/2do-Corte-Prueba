@@ -108,6 +108,7 @@ public class Player : MonoBehaviour
         }
         if (dirH == 0)
         {
+            myBody.velocity = Vector2.zero;
             myAnimator.SetBool("isRunning", false);
         }
 

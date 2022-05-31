@@ -8,6 +8,7 @@ public class FlyingEnemy : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeReference] int healt;
     private Animator myAnimator;
+    private BoxCollider2D MyCollider;
     AIPath myPath;
     
     // Start is called before the first frame update
@@ -15,6 +16,7 @@ public class FlyingEnemy : MonoBehaviour
     {
         myPath = GetComponent<AIPath>();
         myAnimator = GetComponent<Animator>();
+        MyCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -56,8 +58,10 @@ public class FlyingEnemy : MonoBehaviour
 
     private void death()
     {
+
         if (healt <= 0)
         {
+            MyCollider.enabled = false;
             if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 StartCoroutine(FindObjectOfType<GameManager>().countFlyingEnemys());
