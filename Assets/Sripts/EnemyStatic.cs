@@ -9,6 +9,7 @@ public class EnemyStatic : MonoBehaviour
     [SerializeField] int healt;
     [SerializeField] float alcance;
     [SerializeField] float fireRate;
+    [SerializeField] Transform firePosition;
     [SerializeField] AudioClip deathClipEnemy;
     private Animator myAnimator;
     private BoxCollider2D myCollider;
@@ -67,7 +68,7 @@ public class EnemyStatic : MonoBehaviour
         if (Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            Instantiate(Bullet, transform.position,transform.rotation);
+            Instantiate(Bullet, firePosition.position, transform.rotation);
         }
 
     }

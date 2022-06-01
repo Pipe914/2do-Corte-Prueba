@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     [SerializeField] float fireRate;
+    [SerializeField] Transform firepoint;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioClip deathClip;
     [SerializeField] AudioClip jumpClip;
@@ -52,9 +53,9 @@ public class Player : MonoBehaviour
                 shootingDelay = Time.time + 0.5f;
                 nextFire = Time.time + fireRate;
                 if(direcShooting == 1)
-                    Instantiate(bullet, myBody.transform.position, Quaternion.Euler(0,0,0));
+                    Instantiate(bullet, firepoint.position, Quaternion.Euler(0,0,0));
                 if(direcShooting == -1)
-                    Instantiate(bullet, myBody.transform.position, Quaternion.Euler(0,180,0));
+                    Instantiate(bullet, firepoint.position, Quaternion.Euler(0,180,0));
             }
                 
         }
@@ -123,13 +124,16 @@ public class Player : MonoBehaviour
     }
     IEnumerator isDeath()
     {
+        GameManager gm = FindObjectOfType<GameManager>();
         myAnimator.SetBool("isDeath", true);
         Time.timeScale = 0;
+        StartCoroutine(gm.StopMusic());
         yield return new WaitForSecondsRealtime(1f);
         AudioSource.PlayClipAtPoint(deathClip, myBody.position);
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(1.5f);
         Time.timeScale = 1;
-        SceneManager.LoadScene("Megaman");
+        StartCoroutine(gm.RestartGame());
+        
     }
 
 }

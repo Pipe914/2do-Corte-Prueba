@@ -68,6 +68,8 @@ public class GameManager : MonoBehaviour
     {
         musiquita.clip = Inicio; 
         musiquita.loop = true;
+        musiquita.volume = 0.05f;
+        musiquita.priority = 256;
         musiquita.Play(); 
         StartCoroutine(startingCounters());
         Time.timeScale = 0;
@@ -86,6 +88,11 @@ public class GameManager : MonoBehaviour
     public IEnumerator RestartGame()
     {
         SceneManager.LoadScene("Megaman");
+        yield return null;
+    }
+    public IEnumerator StopMusic()
+    {
+        musiquita.Stop();
         yield return null;
     }
 }

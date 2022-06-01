@@ -67,6 +67,8 @@ public class FlyingEnemy : MonoBehaviour
             MyCollider.enabled = false;
             if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Destruction Enemy") && myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
+                myPath.isStopped = true;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 StartCoroutine(FindObjectOfType<GameManager>().countFlyingEnemys());
                 AudioSource.PlayClipAtPoint(deathClipEnemy, player.transform.position);
 
